@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="WPFApplication\Modules\Core\Components\Loading.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WPFApplication\Modules\Core\View\NavView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WPFApplication\Modules\Core\View\Root.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WPFApplication\Modules\MainApp\View\PopulateDBView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WPFApplication\Modules\MainApp\View\SellTablesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="WPFApplication\Modules\Core\Components\Loading.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPFApplication\Modules\Core\Dictionaries\Style.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPFApplication\Modules\Core\View\NavView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPFApplication\Modules\Core\View\Root.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPFApplication\Modules\MainApp\View\PopulateDBView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPFApplication\Modules\MainApp\View\SellTablesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>
