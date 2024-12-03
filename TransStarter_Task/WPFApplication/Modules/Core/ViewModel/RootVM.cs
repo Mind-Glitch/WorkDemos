@@ -11,7 +11,7 @@ public class RootVM : VMBase
         List<UserControl> views =
         [
             new PopulateDBView(),
-            new SellTablesView()
+            new SalesTablesView()
         ];
 
         CurrentView = views.ElementAt(0);

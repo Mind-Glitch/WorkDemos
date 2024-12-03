@@ -13,9 +13,9 @@ namespace TransStarter_Task.WPFApplication.Modules.Core.ViewModel
             UpdateCurrentView = updateCurrentView;
             ViewModels = viewModels;
 
-            SellTablesButton = new ButtonCommand(OnPressSellTablesButton);
+            SalesTablesButton = new ButtonCommand(OnPressSalesTablesButton);
             PopulateDBButton = new ButtonCommand(OnPressPopulateDBButton);
-            CloseButton = new ButtonCommand(OnPressCloseButton);
+            //CloseButton = new ButtonCommand(OnPressCloseButton);
         }
 
         private readonly Action<UserControl?> UpdateCurrentView;
@@ -23,23 +23,18 @@ namespace TransStarter_Task.WPFApplication.Modules.Core.ViewModel
 
         public List<UserControl> ViewModels { get; }
 
-        public ICommand SellTablesButton { get; }
+        public ICommand SalesTablesButton { get; }
         public ICommand PopulateDBButton { get; }
-        public ICommand CloseButton { get; }
+        //public ICommand CloseButton { get; }
 
-        private void OnPressSellTablesButton (object? obj)
+        private void OnPressSalesTablesButton (object? obj)
         {
-            /*if ( obj == null )
-                return;*/
-            //todo: проверить
-            var view = ViewModels.Find(x => x.GetType() == typeof(SellTablesView));
+            var view = ViewModels.Find(x => x.GetType() == typeof(SalesTablesView));
             UpdateCurrentView.Invoke(view);
         }
 
         private void OnPressPopulateDBButton (object? obj)
         {
-            /*if ( obj == null )
-                return;*/
             UpdateCurrentView.Invoke(ViewModels.Find(x=>x.GetType() == typeof(PopulateDBView)));
         }
 

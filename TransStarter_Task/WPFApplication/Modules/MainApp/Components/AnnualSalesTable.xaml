@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="TransStarter_Task.WPFApplication.Modules.MainApp.Components.AnnualSalesTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TransStarter_Task.WPFApplication.Modules.MainApp.Components"
+             xmlns:model="clr-namespace:TransStarter_Task.WPFApplication.Modules.MainApp.Model"
+             mc:Ignorable="d">
+	<ListView x:Name="Root" ItemsSource="{Binding}" Background="Transparent" Padding="0" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" BorderBrush="Transparent" BorderThickness="0">
+		<ListView.ItemTemplate>
+			<DataTemplate>
+				<ItemsControl ItemsSource="{Binding}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal"></StackPanel>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Grid d:DataContext="{d:DesignInstance model:TableCellDTO}">
+								<Label Content="{Binding Value}" Width="{Binding CellWidth}" Style="{StaticResource AnnualTableCell}">
+									<Label.ToolTip>
+										<ToolTip Content="{Binding Value}"/>
+									</Label.ToolTip>
+								</Label>
+							</Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</DataTemplate>
+		</ListView.ItemTemplate>
+	</ListView>
+</UserControl>

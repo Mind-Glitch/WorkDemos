@@ -10,8 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid d:DataContext="{d:DesignInstance viewModel:PopulateDBVM}" Margin="20">
             <StackPanel>
-				<Label Content="Заполнение базы данных"></Label>
-				<Button x:Name="BeginPopulateDB" Command="{Binding StartFillingCommand}">Заполнить таблицу</Button>
+				<Button x:Name="BeginPopulateDB" Command="{Binding StartFillingCommand}" Style="{StaticResource AppButton}">Перезаполнить базу данных</Button>
 				
 				<ContentControl Content="{Binding LoadingView}">
 				</ContentControl>

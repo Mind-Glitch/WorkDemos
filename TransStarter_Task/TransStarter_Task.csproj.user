@@ -16,10 +16,16 @@
     <Compile Update="WPFApplication\Modules\Core\View\Root.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="WPFApplication\Modules\MainApp\Components\AnnualSalesTable.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WPFApplication\Modules\MainApp\Components\SalesTablesList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WPFApplication\Modules\MainApp\View\PopulateDBView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="WPFApplication\Modules\MainApp\View\SellTablesView.xaml.cs">
+    <Compile Update="WPFApplication\Modules\MainApp\View\SalesTablesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -36,10 +42,16 @@
     <Page Update="WPFApplication\Modules\Core\View\Root.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="WPFApplication\Modules\MainApp\Components\AnnualSalesTable.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPFApplication\Modules\MainApp\Components\SalesTablesList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="WPFApplication\Modules\MainApp\View\PopulateDBView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WPFApplication\Modules\MainApp\View\SellTablesView.xaml">
+    <Page Update="WPFApplication\Modules\MainApp\View\SalesTablesView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

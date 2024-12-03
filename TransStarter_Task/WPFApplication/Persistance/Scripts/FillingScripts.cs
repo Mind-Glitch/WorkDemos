@@ -5,7 +5,7 @@ using TransStarter_Task.WPFApplication.Common.Entity;
 namespace TransStarter_Task.WPFApplication.Persistance.Scripts;
 internal class FillingScripts
 {
-    
+
     /// <summary>
     /// <para>.</para>
     /// <para>
@@ -35,16 +35,16 @@ internal class FillingScripts
                 BrandName = "BMW",
                 ModelNames =
                 [
-                    "BMW 320i",
-                    "BMW X5",
-                    "BMW Z4",
-                    "BMW M3",
-                    "BMW X7",
-                    "BMW 530d",
-                    "BMW i8",
-                    "BMW 740Li",
-                    "BMW X3 M40i",
-                    "BMW 228i Gran Coupe"
+                    "320i",
+                    "X5",
+                    "Z4",
+                    "M3",
+                    "X7",
+                    "530d",
+                    "i8",
+                    "740Li",
+                    "X3 M40i",
+                    "228i Gran Coupe"
                 ]
             },
             new()
@@ -52,33 +52,33 @@ internal class FillingScripts
                 BrandName = "Audi",
                 ModelNames =
                 [
-                    "Audi A3",
-                    "Audi Q7",
-                    "Audi A6",
-                    "Audi Q5",
-                    "Audi R8",
-                    "Audi TT",
-                    "Audi e-tron",
-                    "Audi S5 Sportback",
-                    "Audi A8",
-                    "Audi Q3"
+                    "A3",
+                    "Q7",
+                    "A6",
+                    "Q5",
+                    "R8",
+                    "TT",
+                    "e-tron",
+                    "S5 Sportback",
+                    "A8",
+                    "Q3"
                 ]
             },
             new()
             {
-                BrandName = "Mercedes",
+                BrandName = "Mercedes-Benz",
                 ModelNames =
                 [
-                    "Mercedes-Benz C-Class",
-                    "Mercedes-Benz E-Class",
-                    "Mercedes-Benz GLE",
-                    "Mercedes-Benz A-Class",
-                    "Mercedes-Benz S-Class",
-                    "Mercedes-Benz G-Class",
-                    "Mercedes-Benz CLA",
-                    "Mercedes-Benz GLS",
-                    "Mercedes-Benz AMG GT",
-                    "Mercedes-Benz EQS"
+                    "C-Class",
+                    "E-Class",
+                    "GLE",
+                    "A-Class",
+                    "S-Class",
+                    "G-Class",
+                    "CLA",
+                    "GLS",
+                    "AMG GT",
+                    "EQS"
                 ]
             }
         ];
@@ -165,8 +165,9 @@ internal class FillingScripts
             {
                 loadingController?.SetCurrent(orderIndex);
 
-                while ( Random.Shared.Next(11) < 6 ) // 50%
+                while ( Random.Shared.Next(11) < 8 )
                 {
+                    currentTime += TimeSpan.FromDays(Random.Shared.Next(60));
                     currentTime += TimeSpan.FromHours(Random.Shared.Next(25));
                     currentTime += TimeSpan.FromMinutes(Random.Shared.Next(61));
                     currentTime += TimeSpan.FromSeconds(Random.Shared.Next(61));
@@ -174,6 +175,9 @@ internal class FillingScripts
 
                 if ( currentTime > dateTo )
                     currentTime = dateFrom;
+
+                if ( currentTime > dateFrom + TimeSpan.FromDays(365 * 2) )
+                    Debug.WriteLine("F");
 
                 var carCount = Random.Shared.Next(1, 3);
                 var vehicleInfosCount = dbContext.VehicleInfos.Count();
@@ -194,7 +198,8 @@ internal class FillingScripts
                     Cars = cars,
                     Completed = true, // Всегда true потому что это мок
                     TotalPrice = cars.Select(x=>x.Price)
-                    .Aggregate((accumulated, current) => accumulated + current)
+                    .Aggregate((accumulated, current) => accumulated + current),
+                    OrderDate = currentTime
                 };
 
                 dbContext.Orders.Add(order);

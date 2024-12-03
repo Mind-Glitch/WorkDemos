@@ -16,9 +16,9 @@
 		<Label Content="{Binding Name}" FontSize="16"
 			   HorizontalContentAlignment="Center"></Label>
 		<StackPanel Grid.Row="1">
-			<Button Command="{Binding SellTablesButton}">Таблица продаж</Button>
-			<Button Command="{Binding PopulateDBButton}">Заполнение БД</Button>
-			<Button Command="{Binding CloseButton}">Выход</Button>
+			<Button Command="{Binding SalesTablesButton}" Style="{StaticResource AppButton}">Таблица продаж</Button>
+			<Button Command="{Binding PopulateDBButton}" Style="{StaticResource AppButton}">Заполнение БД</Button>
+			<!-- <Button Command="{Binding CloseButton}" Style="{StaticResource AppButton}">Выход</Button> -->
 		</StackPanel>
 	</Grid>
 </UserControl>

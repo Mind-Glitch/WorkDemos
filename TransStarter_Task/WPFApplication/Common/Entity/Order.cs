@@ -9,9 +9,9 @@ public class Order
     
     [Column("customer")]
     public Customer? Customer { get; set; }
-        
+
     [Column("car")]
-    public List<Car>? Cars { get; set; }
+    public List<Car> Cars { get; set; } = new();
 
     [Column("is_completed")]
     public bool Completed { get; set; }

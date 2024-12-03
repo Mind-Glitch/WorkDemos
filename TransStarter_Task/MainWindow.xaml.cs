@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using TransStarter_Task.WPFApplication.Modules.Core.View;
 using TransStarter_Task.WPFApplication.Modules.Core.ViewModel;
 

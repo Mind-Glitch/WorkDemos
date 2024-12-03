@@ -11,10 +11,11 @@ namespace TransStarter_Task.WPFApplication.Modules.Core.Components
     {
         public Loading (LoadingController controller)
         {
-            InitializeComponent();
-
             controller.OnStateChanged += Controller_OnStateChanged;
             controller.OperationNameChanged += Controller_OperationNameChanged;
+
+            InitializeComponent();
+
         }
 
         private void Controller_OperationNameChanged (string obj)
