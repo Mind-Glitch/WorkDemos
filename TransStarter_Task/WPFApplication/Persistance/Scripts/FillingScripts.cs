@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows.Controls;
 using TransStarter_Task.WPFApplication.API;
 using TransStarter_Task.WPFApplication.Common.Entity;
 
@@ -94,8 +95,8 @@ internal class FillingScripts
             "Jacob", "Kathleen", "Gary", "Amy", "Nicholas", "Angela", "Eric", "Shirley", "Jonathan", "Anna",
             "Stephen", "Brenda", "Larry", "Pamela", "Justin", "Emma", "Scott", "Nicole", "Brandon", "Helen",
             "Frank", "Samantha", "Benjamin", "Katherine", "Gregory", "Christine", "Raymond", "Debra", "Samuel",
-            "Rachel",
-            "Patrick", "Carolyn", "Alexander", "Janet", "Jack", "Catherine", "Dennis", "Maria", "Jerry", "Heather"
+            "Rachel", "Patrick", "Carolyn", "Alexander", "Janet", "Jack", "Catherine", "Dennis", "Maria", "Jerry",
+            "Heather"
         ];
             List<string> surnames =
         [
@@ -111,6 +112,25 @@ internal class FillingScripts
             "Price", "Alvarez", "Castillo", "Sanders", "Patel", "Myers", "Long", "Ross", "Foster", "Jimenez"
         ];
 
+            // Я понятия не имею какие автомобили какие комплектации содержат,
+            // а мне, собственно, всё равно. В т.з. не указано kavo & kuda.
+            List<string> equipment =
+            [
+                "Базовая",
+                "Стандартная",
+                "Спорт",
+                "Люкс"
+            ];
+
+            List<string> colors =
+            [
+                "красный",
+                "зелёный",
+                "жёлтый",
+                "чёрный",
+                "белый"
+            ];
+
             #endregion
 
             #region VehicleInfo
@@ -122,15 +142,21 @@ internal class FillingScripts
                 loadingController?.SetCurrent(carsMock.IndexOf(mock));
                 foreach ( var modelName in mock.ModelNames )
                 {
-
-                    dbContext.VehicleInfos.Add(new VehicleInfo
+                    foreach ( var color in colors )
                     {
-                        BrandName = mock.BrandName,
-                        ModelName = modelName
-                    });
+                        foreach ( var eq in equipment )
+                        {
+                            dbContext.VehicleInfos.Add(new VehicleInfo
+                            {
+                                BrandName = mock.BrandName,
+                                ModelName = modelName,
+                                Color = color,
+                                Equipment = eq
+                            });
+                        }
 
-                    await dbContext.SaveChangesAsync();
-
+                        await dbContext.SaveChangesAsync();
+                    }
                 }
             }
 
@@ -215,10 +241,10 @@ internal class FillingScripts
         }
     }
 
-    public class CarModel
+    private class CarModel
     {
-        public string BrandName { get; set; }
+        public string BrandName { get; set; } = string.Empty;
         // ReSharper disable once TypeWithSuspiciousEqualityIsUsedInRecord.Local
-        public List<string> ModelNames { get; set; }
+        public List<string> ModelNames { get; set; } = [];
     }
 }

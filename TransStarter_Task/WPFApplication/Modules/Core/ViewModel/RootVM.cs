@@ -10,8 +10,8 @@ public class RootVM : VMBase
     {
         List<UserControl> views =
         [
+            new SalesTablesView(),
             new PopulateDBView(),
-            new SalesTablesView()
         ];
 
         CurrentView = views.ElementAt(0);

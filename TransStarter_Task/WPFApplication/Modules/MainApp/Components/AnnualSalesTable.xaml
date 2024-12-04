@@ -18,7 +18,9 @@
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
 							<Grid d:DataContext="{d:DesignInstance model:TableCellDTO}">
-								<Label Content="{Binding Value}" Width="{Binding CellWidth}" Style="{StaticResource AnnualTableCell}">
+								<Label Content="{Binding Value}" Width="{Binding CellWidth}" HorizontalContentAlignment="Left" Padding="10 0 0 0"
+									   Background="{Binding Value, Converter={StaticResource AnnualReportEntryBackgroundConverter} }"
+									   Style="{StaticResource AnnualTableCell}">
 									<Label.ToolTip>
 										<ToolTip Content="{Binding Value}"/>
 									</Label.ToolTip>

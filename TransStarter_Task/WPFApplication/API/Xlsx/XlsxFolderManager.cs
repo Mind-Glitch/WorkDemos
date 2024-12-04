@@ -81,4 +81,9 @@ internal class XlsxFolderManager
         stream = new MemoryStream([]);
         return false;
     }
+
+    internal void Close(Stream fileStream)
+    {
+        fileStream.Dispose();
+    }
 }

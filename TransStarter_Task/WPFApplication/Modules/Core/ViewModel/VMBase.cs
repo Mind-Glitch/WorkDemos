@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 namespace TransStarter_Task.WPFApplication.Modules.Core.ViewModel;
 public abstract class VMBase : INotifyPropertyChanged
 {
-    public VMBase()
+    protected VMBase()
     {
         Name = string.Empty;
     }
 
-    public VMBase(string name)
+    protected VMBase(string name)
     {
         Name = name;
     }

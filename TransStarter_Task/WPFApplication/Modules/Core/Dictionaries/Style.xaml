@@ -22,23 +22,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">
-					<Border CornerRadius="5" x:Name="Border" Background="#50D9D9D9">
-						<Border.Triggers>
-							<EventTrigger RoutedEvent="MouseEnter">
-								<BeginStoryboard>
-									<Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)" TargetName="Border">
-										<ColorAnimation To="#20D9D9D9" Duration="0:0:0.100" />
-									</Storyboard>
-								</BeginStoryboard>
-							</EventTrigger>
-							<EventTrigger RoutedEvent="MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard TargetProperty="(Border.Background).(SolidColorBrush.Color)" TargetName="Border">
-                                        <ColorAnimation To="#50D9D9D9" Duration="0:0:0.100" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-							</EventTrigger>
-						</Border.Triggers>
+					<Border x:Name="Border" CornerRadius="5">
 						<Border.Style>
 							<Style TargetType="Border">
 								<Setter Property="Margin" Value="0 3"/>
@@ -46,14 +30,59 @@
 								<Setter Property="MinHeight" Value="45"/>
 								<Setter Property="MaxWidth" Value="200"/>
 								<Setter Property="MaxHeight" Value="65"/>
+								<Setter Property="Background">
+									<Setter.Value>
+										<SolidColorBrush Color="#50D9D9D9"></SolidColorBrush>
+									</Setter.Value>
+								</Setter>
+								<Style.Triggers>
+									<EventTrigger RoutedEvent="MouseEnter">
+										<BeginStoryboard>
+											<Storyboard>
+												<ColorAnimation
+													Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+													To="#20D9D9D9" Duration="0:0:0.100"/>
+											</Storyboard>
+										</BeginStoryboard>
+									</EventTrigger>
+									<EventTrigger RoutedEvent="MouseLeave">
+										<BeginStoryboard>
+											<Storyboard>
+												<ColorAnimation
+													Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+													To="#50D9D9D9" Duration="0:0:0.100"/>
+											</Storyboard>
+										</BeginStoryboard>
+									</EventTrigger>
+
+									<DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+										<DataTrigger.EnterActions>
+											<BeginStoryboard>
+												<Storyboard>
+													<ColorAnimation
+														Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+														To="#20D9D9D9" Duration="0:0:0.100"/>
+												</Storyboard>
+											</BeginStoryboard>
+										</DataTrigger.EnterActions>
+										<DataTrigger.ExitActions>
+											<BeginStoryboard>
+												<Storyboard>
+													<ColorAnimation
+														Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+														To="#50D9D9D9" Duration="0:0:0.100"/>
+												</Storyboard>
+											</BeginStoryboard>
+										</DataTrigger.ExitActions>
+									</DataTrigger>
+								</Style.Triggers>
 							</Style>
 						</Border.Style>
-						<ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True">
-						</ContentPresenter>
+						
+						<ContentPresenter Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
-
 </ResourceDictionary>

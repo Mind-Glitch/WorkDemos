@@ -2,12 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TransStarter_Task"
+             xmlns:model="clr-namespace:TransStarter_Task.WPFApplication.Modules.MainApp.Model"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-	<ResourceDictionary>
-		<ResourceDictionary.MergedDictionaries>
-			<ResourceDictionary Source="WPFApplication/Modules/Core/Dictionaries/Style.xaml" />
-		</ResourceDictionary.MergedDictionaries>
-	</ResourceDictionary>
-    </Application.Resources>
+	<Application.Resources>
+		<ResourceDictionary>
+			<model:AnnualReportEntryBackgroundConverter x:Key="AnnualReportEntryBackgroundConverter" />
+			
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="WPFApplication/Modules/Core/Dictionaries/Style.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

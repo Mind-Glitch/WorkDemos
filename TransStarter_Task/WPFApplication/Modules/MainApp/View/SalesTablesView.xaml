@@ -13,7 +13,8 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<Button Grid.Row="0" Command="{Binding ReloadCommand}" Content="Перезагрузить" Style="{StaticResource AppButton}" Margin="20"/>
+		<Button Grid.Row="0" Command="{Binding ReloadCommand}" IsEnabled="{Binding IsReloadAvailable}" 
+				Content="Перезагрузить" Style="{StaticResource AppButton}" Margin="20"/>
 		<ContentControl Grid.Row="1" Content="{Binding CurrentView}"/>
 	</Grid>
 </UserControl>

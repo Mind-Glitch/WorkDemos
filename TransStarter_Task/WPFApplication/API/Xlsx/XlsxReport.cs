@@ -18,18 +18,26 @@ namespace TransStarter_Task.WPFApplication.API.Xlsx
                 var currentLine = 1;
                 foreach ( var yearAndReport in data )
                 {
-                    worksheet.Cell(currentLine, 2).SetValue("Год :");
-                    worksheet.Cell(currentLine, 3).SetValue(yearAndReport.Key);
-                    currentLine++;
+                    worksheet.Cell(currentLine, 2).SetValue("Год :").Style
+                        .Font.SetBold(true)
+                        .Font.SetFontSize(20);
+
+                    worksheet.Cell(currentLine, 3).SetValue(yearAndReport.Key).Style
+                        .Font.SetBold(true)
+                        .Font.SetFontSize(20);
+                    
+                    currentLine+=2;
 
                     if ( !CreateAnnualReport((1, currentLine), yearAndReport.Value, worksheet, out currentLine, out exception) )
                         return false;
 
-                    currentLine += 2;
+                    currentLine += 5;
                 }
 
                 wb.SaveAs(stream);
                 exception = new Exception();
+
+                GC.Collect();
                 return true;
             }
             catch ( Exception ex )
@@ -56,6 +64,7 @@ namespace TransStarter_Task.WPFApplication.API.Xlsx
                     {
                         worksheet.Cell(nextLineIndex, columnIndex).SetValue(item.Value)
                             .Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
+
                         worksheet.Cell(nextLineIndex, columnIndex).WorksheetColumn().Width = item.CellWidth / 4;
 
                         columnIndex++;
@@ -65,6 +74,7 @@ namespace TransStarter_Task.WPFApplication.API.Xlsx
                 }
 
                 exception = new Exception();
+                GC.Collect();
                 return true;
             }
             catch ( Exception ex )

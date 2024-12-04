@@ -31,6 +31,31 @@ internal class SalesTablesVM : VMBase
         SaveToFileCommand = new ButtonCommand(OnSaveToFileButtonClick);
     }
 
+    private const double ITEM_NAME_CELL_WIDTH = 180;
+    private const double ITEM_PRICE_CELL_WIDTH = 70;
+
+    private readonly SalesTablesList _salesTablesListView = new();
+
+    private Loading? loadingView;
+    public Dictionary<int, List<List<TableCellDTO>>> AnnualDataDictionary { get; set; } = [];
+
+    private bool _reloadAvailable = true;
+    public bool IsReloadAvailable
+    {
+        get => _reloadAvailable;
+        set => _ = SetField(ref _reloadAvailable, value);
+    }
+
+    private object? _currentView;
+    public object? CurrentView
+    {
+        get => _currentView;
+        private set => _ = SetField(ref _currentView, value);
+    }
+
+    public ICommand ReloadCommand { get; private set; }
+    public ICommand SaveToFileCommand { get; private set; }
+
     private void OnSaveToFileButtonClick (object? obj)
     {
         var fileName = obj as string;
@@ -54,33 +79,35 @@ internal class SalesTablesVM : VMBase
             return;
         }
 
-        fileStream.Close();
+        manager.Close(fileStream);
 
         // open file explorer in export folder
         try
         {
-            var process = new Process();
+            using var process = new Process();
             process.StartInfo.FileName = "explorer.exe";
             process.StartInfo.ArgumentList.Add(manager.GetFullPathToFolder);
             process.Start();
         }
-        catch (Win32Exception ex) when (ex.NativeErrorCode == 5)
+        catch ( Win32Exception ex ) when ( ex.NativeErrorCode == 5 )
         {
             MessageBox.Show("Этот код пытается открыть папку в 'explorer.exe', " +
                             "в которую был записан файл xlsx. Папка находится в " +
                             "корне приложения + /xlsx_exported/. Возможно, ваше " +
-                            "антивирусное ПО блокирует операцию." + ex.Message, 
+                            "антивирусное ПО блокирует операцию." + ex.Message,
                             "UnauthorizedAccessException", MessageBoxButton.OK);
         }
         catch ( Exception ex )
         {
-            MessageBox.Show("Вызвано необработанное исключение: " + ex.Message, 
+            MessageBox.Show("Вызвано необработанное исключение: " + ex.Message,
                 "Unhandled exception", MessageBoxButton.OK);
         }
     }
 
     private void OnReloadButtonClick (object? obj)
     {
+        IsReloadAvailable = false;
+
         var dbContext = new DatabaseContext();
         var controller = new LoadingController();
 
@@ -92,24 +119,32 @@ internal class SalesTablesVM : VMBase
             try
             {
                 var orders = dbContext.Orders.Include(x=>x.Cars).ThenInclude(x=>x.VehicleInfo).ToList();
-                AnnualDataDictionary = await CreateReportData(new SalesReport(orders, controller));
+                var salesReport = new SalesReport(orders, controller);
+                AnnualDataDictionary = await CreateReportData(salesReport, controller);
 
-                Application.Current.Dispatcher.BeginInvoke(() =>
+                controller.SetOperationName("Отрисовка интерфейса...");
+                controller.SetCurrent(0);
+                controller.SetMax(1);
+
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    _salesTablesList = new SalesTablesList { DataContext = this };
-                    CurrentView = _salesTablesList;
+                    controller.SetCurrent(1);
+                    _salesTablesListView.DataContext = this;
+                    CurrentView = _salesTablesListView;
                 });
             }
             catch ( Exception ex )
-            { MessageBox.Show(ex.Message, "Unhandled exception", MessageBoxButton.OK); }
+            {
+                MessageBox.Show(ex.Message, "Unhandled exception", MessageBoxButton.OK);
+                IsReloadAvailable = true;
+            }
+            IsReloadAvailable = true;
         });
     }
 
-    private const double ITEM_NAME_CELL_WIDTH = 120;
-    private const double ITEM_PRICE_CELL_WIDTH = 70;
-
     [SuppressMessage("ReSharper", "AccessToModifiedClosure")]
-    private static Task<Dictionary<int, List<List<TableCellDTO>>>> CreateReportData (SalesReport report)
+    private static Task<Dictionary<int, List<List<TableCellDTO>>>> CreateReportData (
+        SalesReport report, LoadingController controller)
     {
         Action<Action<int>> forEveryMonth = operation =>
         {
@@ -121,8 +156,16 @@ internal class SalesTablesVM : VMBase
         years.Sort((x, y) => x.CompareTo(y));
 
         var result = new Dictionary<int, List<List<TableCellDTO>>>();
+
+        controller.SetOperationName("Сортировка и загрузка данных");
+        controller.SetMax(years.Count);
+        controller.SetCurrent(0);
+
         foreach ( var yearIndex in years )
         {
+            GC.Collect();
+
+
             var data = new List<List<TableCellDTO>>();
 
             var earlyEntiries = report.Records.Where(x => x.YearIndex == yearIndex).ToList();
@@ -202,23 +245,10 @@ internal class SalesTablesVM : VMBase
 
             data.Add(line);
             result.Add(yearIndex, data);
+
+            controller.SetCurrent(years.IndexOf(yearIndex));
         }
 
         return Task.FromResult(result);
     }
-
-    private Loading loadingView;
-    private SalesTablesList _salesTablesList;
-    public Dictionary<int, List<List<TableCellDTO>>> AnnualDataDictionary { get; set; }
-
-
-    private object? _currentView;
-    public object? CurrentView
-    {
-        get => _currentView;
-        private set => _ = SetField(ref _currentView, value);
-    }
-
-    public ICommand ReloadCommand { get; private set; }
-    public ICommand SaveToFileCommand { get; private set; }
 }
